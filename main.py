@@ -3,12 +3,13 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 import uvicorn
 from database.database import engine, Base
-from models.models import User, Test
-from routes import auth, user
+from models.models import User, Test, Qa
+from routes import auth, user, test
 
 app = FastAPI(title='Opros')
 app.include_router(auth.app_router)
 app.include_router(user.user_router)
+app.include_router(test.test_router)
 
 app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
 

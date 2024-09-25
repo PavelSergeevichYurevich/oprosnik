@@ -40,9 +40,10 @@ async def add_user(request:Request, user: UserCreateSchema, password: str, db: S
 # изменить пользователя
 @user_router.put(path='/update/')
 async def change_user(request:Request, user_id:int, user_upd: UserUpdateSchema, db: Session = Depends(get_db)):
+    hashed_password = hashing_pass(user_upd.password)
     stmnt = update(User).where(User.id == user_id).values(
         email = user_upd.email,
-        password = user_upd.password,
+        hashed_password = hashed_password,
         name = user_upd.name,
         role = user_upd.role,
     )

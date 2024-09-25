@@ -7,7 +7,7 @@ from dependencies.dependency import get_db
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from models.models import Customer
+from models.models import User
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import sessionmaker
 
@@ -28,7 +28,7 @@ def get_user(email: str):
     engine = create_engine("sqlite:///./opros.db", echo=True)
     SessionLocal = sessionmaker(autoflush=False, bind=engine)
     db = SessionLocal()
-    stmnt = select(Customer).where(Customer.email == email)
+    stmnt = select(User).where(User.email == email)
     user = db.scalars(stmnt).one()
     return user
     
@@ -59,7 +59,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     return user
 
 @app_router.get("/users/me")
-def get_user_me(current_user: Annotated[Customer, Depends(get_current_user)]):
+def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
 
 @app_router.post('/token')

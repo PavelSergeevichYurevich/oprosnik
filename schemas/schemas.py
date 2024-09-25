@@ -7,6 +7,7 @@ class UserCreateSchema(BaseModel):
     name: str
         
 class UserUpdateSchema(UserCreateSchema):
+    password: str
     role: str
     
 class QuestionAnswerSchema(BaseModel):
@@ -15,7 +16,6 @@ class QuestionAnswerSchema(BaseModel):
     
 class TestCreateSchema(BaseModel):
     user_id: int
-    eachAQ: List[QuestionAnswerSchema] 
     
 
 
