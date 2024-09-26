@@ -26,6 +26,7 @@ async def get_tests(request:Request, user_id:int, db: Session = Depends(get_db))
 async def add_test(request:Request, db: Session = Depends(get_db)):
     da = await request.form()
     da = jsonable_encoder(da)
+    print(da)
     email:str = da['email']
     stmnt = select(User).where(User.email == email)
     user_id = db.scalars(stmnt).one().id

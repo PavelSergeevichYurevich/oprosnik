@@ -30,28 +30,44 @@ async def start(request:Request, email: str):
 
 @start_router.get('/test/{email}')
 async def go_test(request:Request, email:str):
-    from random import randint
+    from random import sample
     questions:dict = {
-        1: 'Age',
-        2: 'Weight',
-        3: 'Height',
-        4: 'Male',
-        5: 'Education',
-        6: 'Hobby',
-        7: 'Sport',
-        8: 'Car',
-        9: 'Army',
-        10: 'Work',
+        'citizenship': {
+            'right': 'Russian Federation',
+            'wrong': 'Ukraine'
+        },
+        'education': {
+            'right': 'TOP Academy',
+            'wrong': 'ПТУ-39'
+        },
+        '2*2': {
+            'right': '4',
+            'wrong': '5'
+        },
+        '3+2': {
+            'right': '5',
+            'wrong': '4'
+        },
+        '3+3': {
+            'right': '6',
+            'wrong': '5'
+        },
+        '3*8': {
+            'right': '24',
+            'wrong': '10'
+        },
+        '10*8': {
+            'right': '80',
+            'wrong': '13'
+        },
     }
-    context:dict = {'email': email}
-    i:int = 1
-    while len(context) < 6:
-        key:int = randint(1, 10)
-        if questions[key] in context.values():
-            continue
-        else:
-            context[i] = questions[key]
-            i = i + 1
+    context:list = [{'email': email}]
+    data = list(questions.items())
+    choise:tuple = sample(data, 5)
+    for item in choise:
+        el:dict = {}
+        el[item[0]] = item[1]
+        context.append(el)
     return templates.TemplateResponse("test.html", {"request": request, "context": context})
 
 @start_router.get("/users/{email}")
