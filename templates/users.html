@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+    <title>Users</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Tasks</h1>
+    <h2 style="text-align: center";>Список тестов пользователя <p id="user">{{ context.email }}</p></h2>
+  
+    <table>
+        <thead><tr><th class="ID"></th><th>№</th><th>Тест</th><th>Вопрос</th><th>Ответ</th></tr></thead>
+        <tbody>
+            {%for test in context.tests%}
+                <tr>
+                    <th class="ID">{{test.id}}</th>
+                    <th>{{loop.index}}</th>
+                    <th class="task">{{test.questionsanswers.question}}</th>
+                    <th class="describe">{{test.questionsanswers.answer}}</th>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div class="div" style="margin: auto;">
+        <button class="button" onclick="window.location.href='/'">На главную</button>
+    </div>
+
+    
+    <script defer>
+       
+    </script>
+</body>
+</html>

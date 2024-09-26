@@ -11,7 +11,7 @@
         <h2>Login</h2>
         <form method="get" id="checkForm" onsubmit="send()">
             <p class="textField" id="emailText"><span>Email:</span></p>
-            <input type="email" id="email" name="email" required oninput="check()">
+            <input type="text" id="username" name="username" required oninput="check()">
             <p class="textField" id="passwordText">Password:</p>
             <input type="password" id="password" name="password" required>
             <input type="submit" value="Login">
@@ -23,7 +23,7 @@
 
     <script defer>
         const form = document.querySelector('#checkForm')
-        form.addEventListener('submit', function(e) {e.preventDefault()})
+        {/* form.addEventListener('submit', function(e) {e.preventDefault()})
         let cook = document.cookie;
         let str = cook.split('; ');
         let cookieObject = {};
@@ -39,17 +39,11 @@
                 url_redirect = '/tasks/'+name
                 window.location.href=url_redirect
             }
-        }
+        } */}
         async function send(){
-            const email = document.querySelector("#email").value;
-            const password = document.querySelector("#password").value;
-            fetch("/check/", {
+            fetch("/auth/token/", {
                 method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    email: email,
-                    password: password
-                })
+                body: new FormData(checkForm)
             })
             .then(res => {
                 if (res.redirected) {

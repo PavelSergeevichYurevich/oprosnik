@@ -1,7 +1,8 @@
 from typing import Annotated
+from fastapi.responses import RedirectResponse
 import jwt
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Cookie, FastAPI, Depends, HTTPException, Response
+from fastapi import APIRouter, Cookie, FastAPI, Depends, HTTPException, Response, status
 from sqlalchemy import create_engine, select
 from dependencies.dependency import get_db
 from sqlalchemy.orm import Session
@@ -66,6 +67,7 @@ def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
 
 @auth_router.post('/token')
 def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    print(form_data.username)
     user = get_user(form_data.username) # Получите пользователя из базы данных
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
