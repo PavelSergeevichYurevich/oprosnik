@@ -41,11 +41,14 @@
             }
         }
         async function send(){
+            let checkMail = document.querySelector("#username").value
             let response = await fetch("/auth/token/", {
                 method: "POST",
                 body: new FormData(checkForm)
             })
-            console.log(response)
+            if (response.ok) {
+                window.location.href = '/users/' + checkMail;
+            }
         }
 
     </script>

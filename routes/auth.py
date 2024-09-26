@@ -67,7 +67,6 @@ def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
 
 @auth_router.post('/token')
 def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    print(form_data.username)
     user = get_user(form_data.username) # Получите пользователя из базы данных
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
@@ -77,11 +76,12 @@ def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRe
     if not is_password_correct:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     jwt_token = create_jwt_token({"sub": user.email})
-    
+    name = user.email
     import http.cookies
     http.cookies._is_legal_key = lambda _: True
     response.set_cookie(key = user.email, value = jwt_token)
     return {"access_token": jwt_token, "token_type": "bearer"}
+    # return RedirectResponse(url=f"/users/{name}",status_code=status.HTTP_302_FOUND)
 
 @auth_router.post('/admin')
 def get_user_role(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
