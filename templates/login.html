@@ -41,13 +41,13 @@
             }
         } */}
         async function send(){
-            fetch("/auth/token/", {
+            let response = await fetch("/auth/token/", {
                 method: "POST",
                 body: new FormData(checkForm)
             })
             .then(res => {
-                if (res.redirected) {
-                    window.location.href = res.url;
+                if (res.ok) {
+                    window.location.href = '/';
                     return;
                 } 
                 else

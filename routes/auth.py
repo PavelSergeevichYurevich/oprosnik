@@ -77,6 +77,9 @@ def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRe
     if not is_password_correct:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     jwt_token = create_jwt_token({"sub": user.email})
+    
+    import http.cookies
+    http.cookies._is_legal_key = lambda _: True
     response.set_cookie(key = user.email, value = jwt_token)
     return {"access_token": jwt_token, "token_type": "bearer"}
 
