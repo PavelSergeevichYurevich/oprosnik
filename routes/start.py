@@ -24,6 +24,10 @@ async def login(request:Request):
 async def login(request:Request):
     return templates.TemplateResponse(request=request, name="register.html")
 
+@start_router.get('/start/{email}')
+async def start(request:Request, email: str):
+    return templates.TemplateResponse("start.html", {"request": request, "context": email})
+
 @start_router.get("/users/{email}")
 async def get_tests_page(request:Request, email:str, db: Session = Depends(get_db)):
     stmnt = select(User).where(User.email == email)

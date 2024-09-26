@@ -43,7 +43,7 @@
                       }
                 })
                 .then((response) => response.json())
-                .then((user) => window.location.href = '/users/' + user['user'])
+                .then((user) => window.location.href = '/start/' + user['user'])
                 
             }
         }
@@ -54,7 +54,7 @@
                 body: new FormData(checkForm)
             })
             if (response.ok) {
-                window.location.href = '/users/' + checkMail;
+                window.location.href = '/start/' + checkMail;
             }
         }
 
