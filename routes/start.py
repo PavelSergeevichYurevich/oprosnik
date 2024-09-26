@@ -43,16 +43,16 @@ async def go_test(request:Request, email:str):
         9: 'Army',
         10: 'Work',
     }
-    context:dict = {}
+    context:dict = {'email': email}
     i:int = 1
-    while len(context) < 5:
+    while len(context) < 6:
         key:int = randint(1, 10)
         if questions[key] in context.values():
             continue
         else:
             context[i] = questions[key]
             i = i + 1
-    print(context)
+    return templates.TemplateResponse("test.html", {"request": request, "context": context})
 
 @start_router.get("/users/{email}")
 async def get_tests_page(request:Request, email:str, db: Session = Depends(get_db)):
