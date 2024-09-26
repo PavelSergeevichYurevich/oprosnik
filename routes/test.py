@@ -18,8 +18,6 @@ templates = Jinja2Templates(directory="templates")
 async def get_tests(request:Request, user_id:int, db: Session = Depends(get_db)):
     stmnt = select(Test).where(Test.user_id == user_id)
     tests:list = db.scalars(stmnt).all()
-    for test in tests:
-        print(test.questionsanswers)
     return tests
 
 # создать test

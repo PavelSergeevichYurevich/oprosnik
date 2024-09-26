@@ -10,10 +10,13 @@
     <div class="main">
         <h1>Welcome, {{ context.email }}</h1>
     
-        <form method="POST" id="testForm" onsubmit="send()">
+        <form method="POST" id="testForm" onsubmit="sendtest()">
+            <p class="textField"><span>Email:</span></p>
+            <input type="textField" id="email" name="email" value='{{context.email}}'>
+
             {% for index in range(1, 6) %}
                 <p class="textField"><span>{{context[loop.index]}}:</span></p>
-                <input type="textField" id="{{loop.index}}" name="email" required>
+                <input type="textField" id="{{context[loop.index]}}" name="{{context[loop.index]}}">
             {% endfor %}
             <br>
             <input type="submit" value="Submit">
@@ -22,7 +25,16 @@
     </div>
 
     <script defer>
-        
+        async function sendtest(){
+            let response = await fetch("/test/add/", {
+                method: "POST",
+                body: new FormData(testForm)
+            })
+            if (response.ok) {
+                let url = '/start/' + '{{context.email}}'
+                window.location.href = url;
+            }
+        }
     </script>
 </body>
 </html>
