@@ -1,5 +1,6 @@
 from typing import List
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Depends, Form, Request, status
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import delete, select, update
@@ -22,8 +23,14 @@ async def get_tests(request:Request, user_id:int, db: Session = Depends(get_db))
 
 # создать test
 @test_router.post("/add/")
-async def add_test(request:Request, test: TestCreateSchema, questansw: List[QuestionAnswerSchema], db: Session = Depends(get_db)):
-    new_test = Test(
+async def add_test(request:Request, db: Session = Depends(get_db)):
+    da = await request.form()
+    da = jsonable_encoder(da)
+    email:str = da['email']
+    stmnt = select(User).where(User.email == email)
+    user_id = db.scalars(stmnt).one().id
+    del da['email']
+    """ new_test = Test(
         user_id = test.user_id, 
         )
     db.add(new_test)
@@ -38,8 +45,7 @@ async def add_test(request:Request, test: TestCreateSchema, questansw: List[Ques
         db.add(new_questansw)
         db.commit()
         db.refresh(new_questansw)
-    # return RedirectResponse(url="/app/login/", status_code=status.HTTP_302_FOUND)
-    return new_test
+    return new_test """
 
 # удалить test
 @test_router.delete(path='/delete/')
