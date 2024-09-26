@@ -23,7 +23,7 @@
 
     <script defer>
         const form = document.querySelector('#checkForm')
-        {/* form.addEventListener('submit', function(e) {e.preventDefault()})
+        form.addEventListener('submit', function(e) {e.preventDefault()})
         let cook = document.cookie;
         let str = cook.split('; ');
         let cookieObject = {};
@@ -33,32 +33,19 @@
             cookieObject[curr[0]] = curr[1];
         }
         function check() {
-            let checkMail = document.querySelector("#email").value
+            let checkMail = document.querySelector("#username").value
             if (checkMail in cookieObject) {
-                name = cookieObject[checkMail]
-                url_redirect = '/tasks/'+name
+                name = checkMail
+                url_redirect = '/users/'+name
                 window.location.href=url_redirect
             }
-        } */}
+        }
         async function send(){
             let response = await fetch("/auth/token/", {
                 method: "POST",
                 body: new FormData(checkForm)
             })
-            .then(res => {
-                if (res.ok) {
-                    window.location.href = '/';
-                    return;
-                } 
-                else
-                    return res.text();
-                })
-                .then(data => {
-                    document.getElementById("response").innerHTML = data;
-                })
-                 .catch(error => {
-                    console.error(error);
-                });
+            console.log(response)
         }
 
     </script>
