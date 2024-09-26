@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from routes.auth import hashing_pass
 from dependencies.dependency import get_db
 from models.models import User
-from schemas.schemas import UserCreateSchema, UserUpdateSchema
+from schemas.schemas import UserCreateSchema, UserUpdateSchema, UserShowSchema
 
 user_router = APIRouter(
     prefix='/user',
@@ -16,26 +16,24 @@ user_router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 # вывести пользoвателей
-@user_router.get("/show/", response_model=List[UserCreateSchema])
+@user_router.get("/show/", response_model=List[UserShowSchema])
 async def get_users(request:Request, db: Session = Depends(get_db)):
     stmnt = select(User)
     users:list = db.scalars(stmnt).all()
     return users
 
 # создать пользователя
-@user_router.post("/add/", response_model=UserCreateSchema)
-async def add_user(request:Request, user: UserCreateSchema, password: str, db: Session = Depends(get_db)):
-    hashed_password = hashing_pass(password)
+@user_router.post("/add/")
+async def add_user(request:Request, user: UserCreateSchema, db: Session = Depends(get_db)):
+    hashed_password = hashing_pass(user.password)
     new_user = User(
         email = user.email,
         hashed_password = hashed_password,
-        name = user.name
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return new_user
-    # return RedirectResponse(url="/app/login/", status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/login/", status_code=status.HTTP_302_FOUND)
 
 # изменить пользователя
 @user_router.put(path='/update/')
@@ -44,7 +42,6 @@ async def change_user(request:Request, user_id:int, user_upd: UserUpdateSchema, 
     stmnt = update(User).where(User.id == user_id).values(
         email = user_upd.email,
         hashed_password = hashed_password,
-        name = user_upd.name,
         role = user_upd.role,
     )
     user = db.execute(stmnt)

@@ -4,10 +4,11 @@ from pathlib import Path
 import uvicorn
 from database.database import engine, Base
 from models.models import User, Test, Qa
-from routes import auth, user, test
+from routes import auth, user, test, start
 
 app = FastAPI(title='Opros')
-app.include_router(auth.app_router)
+app.include_router(auth.auth_router)
+app.include_router(start.start_router)
 app.include_router(user.user_router)
 app.include_router(test.test_router)
 

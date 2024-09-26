@@ -3,11 +3,13 @@ from pydantic import BaseModel
 
 class UserCreateSchema(BaseModel):
     email: str
+    password: str
     hashed_password: Optional[str] = None
-    name: str
+    
+class UserShowSchema(BaseModel):
+    email: str
         
 class UserUpdateSchema(UserCreateSchema):
-    password: str
     role: str
     
 class QuestionAnswerSchema(BaseModel):

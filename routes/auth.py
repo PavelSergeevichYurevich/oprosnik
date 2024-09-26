@@ -12,7 +12,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import sessionmaker
 
 
-app_router = APIRouter(
+auth_router = APIRouter(
     prefix='/auth',
     tags=['auth']
 )
@@ -58,11 +58,13 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         raise HTTPException(status_code=400, detail="User not found")
     return user
 
-@app_router.get("/users/me")
+
+
+@auth_router.get("/users/me")
 def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
 
-@app_router.post('/token')
+@auth_router.post('/token')
 def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = get_user(form_data.username) # Получите пользователя из базы данных
     if not user:
@@ -76,7 +78,7 @@ def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRe
     response.set_cookie(key = user.email, value = jwt_token)
     return {"access_token": jwt_token, "token_type": "bearer"}
 
-@app_router.post('/admin')
+@auth_router.post('/admin')
 def get_user_role(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = get_user(form_data.username) # Получите пользователя из базы данных
     if not user:
