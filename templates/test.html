@@ -10,19 +10,35 @@
     <div class="main">
         <h1>Welcome, {{ context[0].email }}</h1>
         <form method="POST" id="testForm" onsubmit="sendtest()">
-            <p class="textField"><span>Email:</span></p>
-            <input type="textField" id="email" name="email" value='{{context[0].email}}'>
+            <p class="textField"><span>Email:</span>
+                <input type="textField" id="email" name="email" value='{{context[0].email}}'>
+            </p>
 
+            <!-- {%for i  in range (1,6)%}
+                <hr>
+                {%for key, value in context[i].items()%}
+                    <p><b>{{key}}:</b></p>
+                
+                    {%for k, v in value.items()%}
+                        <input type="checkbox" name="{{key}}" value="{{k}}"/>
+                        <label for="{{key}}">{{v}}</label>
+                    {%endfor%}
+
+                {%endfor%}
+            {%endfor%} -->
             {%for i  in range (1,6)%}
-                    {%for key, value in context[i].items()%}
-                        <p>{{key}}</p>
+                <hr>
+                {%for key, value in context[i].items()%}
+                    <fieldset>
+                        <legend><b>{{key}}:</b></legend>
                     
                         {%for k, v in value.items()%}
-                            <input type="checkbox" name="{{key}}" value="{{k}}"/>
+                            <input type="radio" name="{{key}}" value="{{k}}"/>
                             <label for="{{key}}">{{v}}</label>
                         {%endfor%}
-
-                    {%endfor%}
+                    </fieldset>
+                {%endfor%}
+               
             {%endfor%}
             <br>
             <input type="submit" value="Submit">

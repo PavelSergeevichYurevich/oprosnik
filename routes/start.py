@@ -32,11 +32,11 @@ async def start(request:Request, email: str):
 async def go_test(request:Request, email:str):
     from random import sample
     questions:dict = {
-        'citizenship': {
+        'Citizenship': {
             'right': 'Russian Federation',
             'wrong': 'Ukraine'
         },
-        'education': {
+        'Education': {
             'right': 'TOP Academy',
             'wrong': 'ПТУ-39'
         },
