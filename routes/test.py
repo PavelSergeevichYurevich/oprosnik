@@ -30,22 +30,22 @@ async def add_test(request:Request, db: Session = Depends(get_db)):
     stmnt = select(User).where(User.email == email)
     user_id = db.scalars(stmnt).one().id
     del da['email']
-    """ new_test = Test(
-        user_id = test.user_id, 
+    new_test = Test(
+        user_id = user_id, 
         )
     db.add(new_test)
     db.commit()
     db.refresh(new_test)
-    for item in questansw:
+    for k, v in da.items():
         new_questansw = Qa(
             test_id = new_test.id,
-            question = item.question,
-            answer = item.answer
+            question = k,
+            answer = v
         )
         db.add(new_questansw)
         db.commit()
         db.refresh(new_questansw)
-    return new_test """
+    return new_test
 
 # удалить test
 @test_router.delete(path='/delete/')
