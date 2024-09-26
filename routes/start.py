@@ -28,6 +28,32 @@ async def login(request:Request):
 async def start(request:Request, email: str):
     return templates.TemplateResponse("start.html", {"request": request, "context": email})
 
+@start_router.get('/test/{email}')
+async def go_test(request:Request, email:str):
+    from random import randint
+    questions:dict = {
+        1: 'Age',
+        2: 'Weight',
+        3: 'Height',
+        4: 'Male',
+        5: 'Education',
+        6: 'Hobby',
+        7: 'Sport',
+        8: 'Car',
+        9: 'Army',
+        10: 'Work',
+    }
+    context:dict = {}
+    i:int = 1
+    while len(context) < 5:
+        key:int = randint(1, 10)
+        if questions[key] in context.values():
+            continue
+        else:
+            context[i] = questions[key]
+            i = i + 1
+    print(context)
+
 @start_router.get("/users/{email}")
 async def get_tests_page(request:Request, email:str, db: Session = Depends(get_db)):
     stmnt = select(User).where(User.email == email)

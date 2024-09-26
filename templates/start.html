@@ -8,13 +8,17 @@
 </head>
 <body>
     <div class="main">
-        <h1>Welcome, {{ context.email }}</h1>
+        <h1>Welcome, {{ context }}</h1>
      
-        <button onclick="window.location.href='/'">Пройти тест</button>
+        <button onclick="test()">Пройти тест</button>
         <button onclick="users()">Результаты тестов</button>
     </div>
 
     <script defer>
+        function test() {
+            let url = '/test/' + '{{context}}'
+            window.location.href = url;
+        }
         function users() {
             let url = '/users/' + '{{context}}'
             window.location.href = url;
