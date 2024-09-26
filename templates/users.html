@@ -10,22 +10,30 @@
 <body>
     <h1 style="text-align: center;">Tasks</h1>
     <h2 style="text-align: center";>Список тестов пользователя <p id="user">{{ context.email }}</p></h2>
-        {{context.tests[0].questionsanswers[0].question}}
-    <table>
-        <thead><tr><th class="ID"></th><th>№</th><th>Тест</th><th>Вопрос</th><th>Ответ</th></tr></thead>
-        <tbody>
-            {%for test in context.tests%}
+        <!-- {{context.tests[0].questionsanswers[0].question}} -->
+    
+    {%for test in context.tests%}
+    <hr>
+         <table>
+            <tbody>
                 <tr>
-                    <th class="ID">{{test.id}}</th>
-                    <th>{{loop.index}}</th>
+                    <th colspan = '2'>Тест {{test.id}}</th>
+                </tr>
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
                     {%for questionsanswer in test.questionsanswers%}
-                        <th class="task">{{questionsanswer.question}}</th>
-                        <th class="describe">{{questionsanswer.answer}}</th>
+                    <tr>
+                        <td class="task">{{questionsanswer.question}}</td>
+                        <td class="describe">{{questionsanswer.answer}}</td>
+                    </tr>    
                     {%endfor%}
                 </tr>
+            </tbody>
+        </table>
             {%endfor%}
-        </tbody>
-    </table>
+     <hr>
+    
     <div class="div" style="margin: auto;">
         <button class="button" onclick="window.location.href='/'">На главную</button>
     </div>

@@ -46,12 +46,13 @@
         background-color: bisque;
         border: 1px solid black;
     }
-    table tr, th {
+    table tr, th, td {
         border: 1px solid black;
         font-weight: lighter;
+        text-align: center;
 
     }
-    table thead tr, th{
+    table thead tr, th, td{
         font-weight: bolder;
     }
     .div {
