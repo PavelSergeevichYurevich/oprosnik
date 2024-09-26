@@ -32,12 +32,19 @@
             curr = str[i].split('=');
             cookieObject[curr[0]] = curr[1];
         }
-        function check() {
+        async function check() {
             let checkMail = document.querySelector("#username").value
             if (checkMail in cookieObject) {
-                name = checkMail
-                url_redirect = '/users/'+name
-                window.location.href=url_redirect
+                token = cookieObject[checkMail]
+                await fetch("/auth/me/", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,  
+                      }
+                })
+                .then((response) => response.json())
+                .then((user) => window.location.href = '/users/' + user['user'])
+                
             }
         }
         async function send(){

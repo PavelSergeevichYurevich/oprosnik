@@ -61,9 +61,9 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 
 
 
-@auth_router.get("/users/me")
+@auth_router.get("/me")
 def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):
-    return current_user
+    return {'user': current_user}
 
 @auth_router.post('/token')
 def authenticate_user(response: Response,  form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
