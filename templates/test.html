@@ -14,18 +14,6 @@
                 <input type="textField" id="email" name="email" value='{{context[0].email}}'>
             </p>
 
-            <!-- {%for i  in range (1,6)%}
-                <hr>
-                {%for key, value in context[i].items()%}
-                    <p><b>{{key}}:</b></p>
-                
-                    {%for k, v in value.items()%}
-                        <input type="checkbox" name="{{key}}" value="{{k}}"/>
-                        <label for="{{key}}">{{v}}</label>
-                    {%endfor%}
-
-                {%endfor%}
-            {%endfor%} -->
             {%for i  in range (1,6)%}
                 <hr>
                 {%for key, value in context[i].items()%}

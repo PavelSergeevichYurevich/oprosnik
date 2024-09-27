@@ -1,11 +1,8 @@
 from typing import Annotated
-from fastapi.responses import RedirectResponse
 import jwt
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Cookie, FastAPI, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy import create_engine, select
-from dependencies.dependency import get_db
-from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from models.models import User
@@ -58,8 +55,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     if not user:
         raise HTTPException(status_code=400, detail="User not found")
     return user
-
-
 
 @auth_router.get("/me")
 def get_user_me(current_user: Annotated[User, Depends(get_current_user)]):

@@ -1,13 +1,10 @@
-from typing import List
-from fastapi import APIRouter, Depends, Form, Request, status
+from fastapi import APIRouter, Depends, Request
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 from dependencies.dependency import get_db
 from models.models import User, Test, Qa
-from schemas.schemas import TestCreateSchema, QuestionAnswerSchema
 
 test_router = APIRouter(
     prefix='/test',

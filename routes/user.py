@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, Request, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import delete, select, update
 from sqlalchemy.orm import Session
