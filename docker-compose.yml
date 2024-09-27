@@ -1,6 +1,6 @@
 services:
   web:
-    build: ./front
+    build: ./app/templates
     restart: always
     ports:
       - "80:80"
@@ -8,10 +8,10 @@ services:
       - python_app
 
   python_app:
-    build: ./back
+    build: ./app
     restart: always
     ports:
-      - "5001:5001"
+      - "8000:8000"
 
 volumes:
   web_data:

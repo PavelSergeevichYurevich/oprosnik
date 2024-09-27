@@ -1,8 +1,8 @@
 /env
-back/__pycache__
-back/app/database/__pycache__
-back/app/dependencies/__pycache__
-back/app/models/__pycache__
-back/app/routes/__pycache__
-back/app/schemas/__pycache__
-back/app/opros.db
+app/__pycache__
+/app/database/__pycache__
+/app/dependencies/__pycache__
+/app/models/__pycache__
+/app/routes/__pycache__
+/app/schemas/__pycache__
+/app/opros.db
