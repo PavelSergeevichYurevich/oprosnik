@@ -20,7 +20,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 SECRET_KEY = "60dad50dcf49cdb04ff89b51a6c5b3abcb6eeba1a628b96b1f57c06a838d3383"
 ALGORITHM = "HS256"
-EXPIRATION_TIME = timedelta(minutes=30)
+EXPIRATION_TIME = timedelta(minutes=720)
 
 def get_user(email: str):
     engine = create_engine("sqlite:///./opros.db", echo=True)

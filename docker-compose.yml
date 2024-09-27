@@ -1,0 +1,22 @@
+services:
+  web:
+    build: ./templates
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - my-network
+    depends_on:
+      - python_app
+
+  python_app:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
