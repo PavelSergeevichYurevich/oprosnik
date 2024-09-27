@@ -14,7 +14,7 @@ app.include_router(test.test_router)
 
 app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
 
-HOST = '127.0.0.1'
+HOST = '0.0.0.0'
 if __name__ == '__main__':
     Base.metadata.create_all(bind=engine)
     print('Starting server')
